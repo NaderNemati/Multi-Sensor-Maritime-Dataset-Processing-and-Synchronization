@@ -1,5 +1,3 @@
-# Multi-Sensor-Maritime-Dataset-Processing-and-Synchronization
-
 <div align="center">
   <table border=0 style="border: 0px solid #c6c6c6 !important; border-spacing: 0px; width: auto !important;">
     <tr>
