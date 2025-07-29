@@ -158,3 +158,85 @@ Purpose: Align frames purely based on their recorded timestamps, assuming accura
 
 Each method is implemented as a script, and the results are stored in a unified format for comparing downstream fusion tasks. Visualization and statistics are provided to inspect the synchronization quality.
 
+## Output
+
+After running any of the three synchronization pipelines, a set of structured and analysis-ready output files is generated in the synced_output/ directory. This allows for easy inspection, downstream fusion tasks, or training data preparation for machine learning models.
+
+##### 1. Synchronized LiDAR Frames (.npy)
+
+    Each synchronized LiDAR point cloud is saved as a NumPy binary file using the format:
+
+The file contains a 2D array of shape (N, 3) where each row represents a 3D point with (x, y, z) coordinates.
+
+The point cloud is already transformed using the Base2LiDAR calibration matrix to place all data in the same spatial reference frame.
+
+##### 2. Synchronized Radar Images (.png)
+
+    The radar (X-band) images that best match the LiDAR frames (either by timestamp or feature similarity) are saved as .png files.
+
+For deep learning synchronization, radar images are converted to RGB before processing, but grayscale is retained in the output to save space.
+
+These images are useful for visual inspection, EDA, or use as input to CNN models.
+
+##### 3. GNSS Metadata (.json)
+
+    For each synchronized pair, the closest GNSS reading (based on timestamp) is saved as a .json file.
+
+This JSON file contains location metadata such as:
+    {
+  "timestamp": 1724625908715105792,
+  "latitude": 1.246756,
+  "longitude": 103.841014,
+  "rosbag_file": "...",
+  ...
+    }
+
+Useful for mapping, trajectory tracking, or geospatial visualization of the synchronized data.
+
+##### 4. Synchronization Summary File (synced_summary.csv)
+
+    A CSV summary file that consolidates metadata and quality metrics for all matched frames.
+
+Columns include:
+
+    index: Match index
+
+    timestamp: LiDAR frame timestamp
+
+    lidar_shape: Shape of saved LiDAR array
+
+    xband_shape: Size of the radar image
+
+    similarity_score: Cosine similarity between extracted features (deep/statistical)
+
+    gnss_lat, gnss_lon: Coordinates from GNSS metadata
+
+Sample:
+...
+        index,timestamp,lidar_shape,xband_shape,similarity_score,gnss_lat,gnss_lon
+        0,1724625908715105792,"(32000, 3)","(2048, 2048)",0.0927,1.246756,103.841014
+...
+
+
+Enables quick filtering, performance evaluation, or visualization of synchronization quality over time.
+
+
+Together, these outputs provide a clean and rich dataset for multimodal sensor fusion tasks that enable downstream modeling like object detection, scene understanding, or spatial-temporal trajectory analysis.
+
+### Getting Started
+
+The codes are designed to run in environments like Google Colab or a local Python setup with:
+
+    PyTorch
+
+    PIL
+
+    NumPy
+
+    Matplotlib
+
+    Scikit-learn
+
+    Pandas
+
+
