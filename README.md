@@ -71,5 +71,90 @@ Feature Vectors:
     [mean, std, max, min, P10, P25, P50, P75, P90, P95, std/mean, max - min]
 
 
+## Sensor Synchronization Methods
 
+To align data captured from multiple heterogeneous sensors (LiDAR and radar), three distinct synchronization strategies have been implemented and systematically compared. Each approach is tailored to different system setups, offering trade-offs between accuracy, interpretability, and computational efficiency.
+
+#### 1️⃣ Deep Learning–Based Feature Synchronization
+
+Purpose: Align radar images with LiDAR point clouds using high-level semantic features extracted from a convolutional neural network.
+
+     Architecture:
+
+        Utilizes pretrained MobileNetV2, a lightweight CNN, to extract 1280-dimensional feature vectors from radar (X-band) images.
+
+        Converts each image to RGB, resizes it to 128×128, and applies ImageNet normalization.
+
+     LiDAR Feature Representation:
+
+        Instead of raw point clouds, descriptive statistics (mean, std, min, max) across XYZ axes are extracted to create a compact feature vector.
+
+     Similarity Metric:
+
+        Cosine similarity is computed between the radar CNN features and LiDAR statistical features (truncated to match dimensionality).
+
+     Advantages:
+
+        Captures high-level visual semantics (e.g., shapes, textures) from radar images.
+
+        Can tolerate moderate sensor noise or temporal misalignment.
+
+     Limitations:
+
+        Requires image conversion to RGB even if radar is inherently grayscale.
+
+        Slight mismatch in feature modality may affect precision.
+
+#### 2️⃣ Statistical Feature-Based Synchronization
+
+Purpose: Synchronize frames based on directly interpretable statistical characteristics of sensor data.
+
+     Radar Features:
+
+        From each grayscale radar image, 12 statistical features are extracted:
+        [mean, std, max, min, percentiles (P10–P95), std/mean, dynamic range]
+
+     LiDAR Features:
+
+        Same 12D vector as above: mean, std, max, and min values across X, Y, Z axes.
+
+     Similarity Metric:
+
+        Cosine similarity is calculated between the 12-dimensional LiDAR and radar feature vectors.
+
+     Advantages:
+
+        Fully interpretable and does not require deep learning.
+
+        Lightweight and fast — suitable for embedded systems.
+
+     Limitations:
+
+        Might not capture high-level semantic cues (e.g., object shape) in radar images.
+
+        Sensitive to sensor noise and outliers in the raw data.
+
+#### 3️⃣ Timestamp-Based Synchronization
+
+Purpose: Align frames purely based on their recorded timestamps, assuming accurate and synchronized clocks.
+
+     Mechanism:
+
+        For each LiDAR frame timestamp, searches for the closest radar frame timestamp within a configurable temporal tolerance window (e.g., 10 ms).
+
+     Advantages:
+
+        Fastest and simplest method — no feature computation required.
+
+        Ideal for well-calibrated acquisition systems where timestamps are accurate and aligned.
+
+     Limitations:
+
+        Fails under clock drift or imprecise logging, which is common in distributed sensor platforms.
+
+        Does not handle content mismatch or dropped frames.
+
+
+
+Each method is implemented as a script, and the results are stored in a unified format for comparing downstream fusion tasks. Visualization and statistics are provided to inspect the synchronization quality.
 
