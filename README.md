@@ -22,7 +22,8 @@ Moreover, this dataset includes different scenarios, Near Port, Outer Port, Sing
 ## What’s Inside?!
 
 #### 1- Exploratory Data Analysis (EDA)
-LiDAR EDA
+
+### LiDAR EDA
 
 The LiDAR point cloud data contains spatial information in the form of 3D coordinates (X, Y, Z), sometimes with intensity or reflectivity channels. The following analyses were performed:
 
@@ -45,6 +46,27 @@ Computation of 12D feature vectors from each LiDAR frame:
     [mean_x, mean_y, mean_z, std_x, std_y, std_z, max_x, max_y, max_z, min_x, min_y, min_z]
 These are used for feature-based synchronization.
 
+
+### Radar EDA
+
+The radar data includes X-band (and optionally W-band) radar images saved as .png files. These are typically grayscale but may also include RGB-converted versions. Radar EDA focuses on:
+
+Image Structure Analysis:
+
+Validation of image dimensions (e.g., 2048×2048) and color channels (grayscale vs. RGB).
+
+Conversion to grayscale when required for consistency.
+
+Intensity Distribution:
+
+Histograms of pixel intensities to understand contrast, noise, and signal strength.
+
+Percentile-based features such as P10, P25, P50, P75, P90, P95 for feature extraction.
+
+Feature Vectors:
+
+    12D feature vectors computed per radar image:
+    [mean, std, max, min, P10, P25, P50, P75, P90, P95, std/mean, max - min]
 
 
 
