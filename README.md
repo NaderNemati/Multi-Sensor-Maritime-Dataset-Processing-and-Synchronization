@@ -43,7 +43,9 @@ Additional statistics, like bounding box extents to assess the physical area cov
 Feature Vectors:
 
 Computation of 12D feature vectors from each LiDAR frame:
+    
     [mean_x, mean_y, mean_z, std_x, std_y, std_z, max_x, max_y, max_z, min_x, min_y, min_z]
+
 These are used for feature-based synchronization.
 
 
