@@ -1,5 +1,18 @@
 # Multi-Sensor-Maritime-Dataset-Processing-and-Synchronization
 
+
+<div align="center">
+  <table border=0 style="border: 0px solid #c6c6c6 !important; border-spacing: 0px; width: auto !important;">
+    <tr>
+      <td valign=top style="border: 0px solid #c6c6c6 !important; padding: 0px !important;">
+        <div align=center valign=top>
+          <img src="https://github.com/NaderNemati/Multi-Sensor-Maritime-Dataset-Processing-and-Synchronization/blob/main/image/Multimodal%20Data%20Fusion%20Visualization.png" style="margin: 0px !important; height: 400px !important;">
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
 ### Dataset Overview: Autoferry Multi-Modal Maritime Sensor Dataset
 
 The Autoferry, Multi-Modal Maritime Sensor Dataset is a publicly available dataset designed for research in autonomous navigation in maritime environments. It was collected as part of the autoferry project, which aims to develop safe and reliable autonomous ferry systems for short-distance sea transport.
